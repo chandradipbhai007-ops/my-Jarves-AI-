@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#07111f">
+<title>JARVIS — Personal AI</title>
+<style>
+:root{color-scheme:dark;--bg:#07111f;--panel:#0d1b2c;--line:#1d3a53;--cyan:#57e6ff;--muted:#9bb4c8;--white:#eaf7ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#102d46 0,#07111f 58%);color:var(--white);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+main{max-width:900px;margin:auto;padding:20px}.top{display:flex;align-items:center;gap:14px;margin:8px 0 22px}.orb{width:58px;height:58px;border:2px solid var(--cyan);border-radius:50%;display:grid;place-items:center;color:var(--cyan);box-shadow:0 0 22px #57e6ff33;font-size:24px}.title{font-size:clamp(25px,5vw,38px);letter-spacing:.12em;margin:0}.sub{color:var(--muted);margin:0}.status{margin-left:auto;color:var(--cyan);font-size:12px;letter-spacing:.1em}
+.panel{background:#0b1929dd;border:1px solid var(--line);border-radius:18px;padding:17px;margin:14px 0;box-shadow:0 12px 35px #0002}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}button,select,textarea,input{font:inherit}button,select{border:1px solid #28506a;background:#10283b;color:var(--white);border-radius:12px;padding:11px 14px}button{cursor:pointer}button:hover{border-color:var(--cyan)}button.primary{background:#0b5266;border-color:var(--cyan)}button:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}.label{font-size:12px;letter-spacing:.13em;color:var(--cyan);text-transform:uppercase;margin:0 0 10px}.chat{height:310px;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:4px}.msg{max-width:90%;padding:11px 13px;border-radius:14px;white-space:pre-wrap;overflow-wrap:anywhere}.jarvis{align-self:flex-start;background:#10283b;border:1px solid #1c425b}.user{align-self:flex-end;background:#123f50;border:1px solid #24758a}.composer{display:flex;gap:8px;margin-top:12px}.composer textarea{flex:1;resize:vertical;min-height:48px;max-height:140px;background:#071321;color:var(--white);border:1px solid var(--line);border-radius:12px;padding:12px}.small{font-size:13px;color:var(--muted)}.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:9px}.quick button{text-align:left;min-height:54px}.foot{color:var(--muted);font-size:12px;text-align:center;margin:24px 0 10px}a{color:var(--cyan)}@media(max-width:520px){main{padding:13px}.panel{padding:13px}.status{width:100%;margin:0}.top{flex-wrap:wrap}.composer{flex-wrap:wrap}.composer textarea{flex-basis:100%}}
+</style>
+</head>
+<body>
+<main>
+<header class="top">
+  <div class="orb" aria-hidden="true">J</div>
+  <div><h1 class="title">J.A.R.V.I.S.</h1><p class="sub">Personal Assistant • Prototype 1.0</p></div>
+  <div class="status" id="status">● SYSTEM READY</div>
+</header>
+
+<section class="panel">
+  <p class="label">Control panel</p>
+  <div class="row">
+    <button class="primary" id="micBtn">🎙 Start speaking</button>
+    <button id="stopBtn">■ Stop voice</button>
+    <label class="small" for="lang">Language</label>
+    <select id="lang">
+      <option value="gu-IN">ગુજરાતી</option><option value="hi-IN">हिन्दी</option><option value="en-IN">English (India)</option>
+    </select>
+    <label class="small"><input type="checkbox" id="speak" checked> Speak replies</label>
+  </div>
+  <p class="small" id="voiceNote">Voice recognition depends on your browser and may use an online speech service. Press the microphone only when you want to speak.</p>
+</section>
+
+<section class="panel">
+  <p class="label">Assistant conversation</p>
+  <div class="chat" id="chat" aria-live="polite">
+    <div class="msg jarvis">Hello! I am JARVIS, your personal assistant prototype. Try: “time”, “date”, “open YouTube”, or ask for help with your EV bike project. For open-ended AI answers, use the Ask AI button below.</div>
+  </div>
+  <form class="composer" id="form">
+    <textarea id="prompt" rows="2" placeholder="Type in Gujarati, Hindi or English…"></textarea>
+    <button class="primary" type="submit">Send ➤</button>
+  </form>
+  <div class="row" style="margin-top:10px">
+    <button id="askAi">✨ Ask AI (opens ChatGPT)</button>
+    <button id="clear">Clear chat</button>
+  </div>
+  <p class="small">This free first version uses built-in commands; it does not pretend to be a full generative AI model. “Ask AI” opens ChatGPT separately.</p>
+</section>
+
+<section class="panel">
+  <p class="label">Quick launch</p>
+  <div class="quick">
+    <button data-url="https://www.google.com">🔎 Google Search</button>
+    <button data-url="https://www.youtube.com">▶ YouTube</button>
+    <button data-url="https://chatgpt.com">✨ ChatGPT</button>
+    <button data-url="https://github.com">💻 GitHub</button>
+    <button data-url="https://www.khanacademy.org">📚 Study</button>
+    <button data-url="https://www.wikipedia.org">🌐 Wikipedia</button>
+  </div>
+</section>
+
+<section class="panel">
+  <p class="label">Try saying or typing</p>
+  <div class="row">
+    <button class="example">What time is it?</button>
+    <button class="example">Open YouTube</button>
+    <button class="example">Help with my EV bike project</button>
+    <button class="example">How do I start learning Python?</button>
+  </div>
+</section>
+<p class="foot">JARVIS prototype • Runs in your browser • No API key required for basic commands</p>
+</main>
+<script>
+const $=s=>document.querySelector(s), chat=$('#chat'), status=$('#status');
+function add(text,who='jarvis'){const d=document.createElement('div');d.className='msg '+who;d.textContent=text;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d}
+function say(text){if(!$('#speak').checked||!('speechSynthesis'in window))return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang=$('#lang').value;window.speechSynthesis.speak(u)}
+function reply(text){add(text);say(text)}
+function runCommand(raw){
+ const q=raw.trim(), s=q.toLowerCase(); if(!q)return;
+ add(q,'user'); $('#prompt').value='';
+ if(/\b(time|સમય|समय|વાગ્યા|बजे)\b/.test(s)){reply('હમણાંનો સમય: '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})+'.');return}
+ if(/\b(date|તારીખ|तारीख|આજની તારીખ)\b/.test(s)){reply('આજની તારીખ: '+new Date().toLocaleDateString());return}
+ if(s.includes('open youtube')||s.includes('યુટ્યુબ')||s.includes('यूट्यूब')){reply('YouTube ખોલી રહ્યો છું.');window.open('https://www.youtube.com','_blank','noopener');return}
+ if(s.includes('open google')||s.includes('google ખોલ')||s.includes('गूगल खोल')){reply('Google ખોલી રહ્યો છું.');window.open('https://www.google.com','_blank','noopener');return}
+ if(s.includes('open github')||s.includes('github ખોલ')){reply('GitHub ખોલી રહ્યો છું.');window.open('https://github.com','_blank','noopener');return}
+ if(s.includes('ev bike')||s.includes('electric bike')||s.includes('ઇલેક્ટ્રિક બાઈક')||s.includes('ઇવી બાઈક')){reply('EV bike project માટે સલામત શરૂઆત: પહેલાં requirements લખ—વજન, અંદાજિત રેન્જ, ઝડપ, wheel design અને બજેટ. પછી motor, controller, battery અને brakingને અલગથી અભ્યાસ કર. Road-use prototype માટે qualified adult/engineerની દેખરેખમાં જ electrical અને mechanical testing કર. હું design plan અને calculations ગોઠવવામાં મદદ કરી શકું.');return}
+ if(s.includes('python')){reply('Python શીખવાની શરૂઆત: variables, if/else, loops, functions અને પછી નાનો project. પહેલાં 20–30 મિનિટના નાના practice sessions રાખ. “Ask AI” દબાવીને તારા લેવલ મુજબ સંપૂર્ણ plan માગી શકે છે.');return}
+ if(s.includes('hello')||s.includes('હેલો')||s.includes('નમસ્તે')||s.includes('નમસ્તે')){reply('નમસ્તે! હું તૈયાર છું. શું કામ કરવું છે?');return}
+ reply('આ prototypeમાં આ પ્રશ્નનો સંપૂર્ણ AI જવાબ બનાવવાની સુવિધા હજી નથી. “Ask AI (opens ChatGPT)” દબાવ અથવા ઉપરના quick commands અજમાવ. હું અહીં time/date, quick launch અને થોડા project prompts સંભાળી શકું છું.');
+}
+$('#form').addEventListener('submit',e=>{e.preventDefault();runCommand($('#prompt').value)});
+document.querySelectorAll('.quick button').forEach(b=>b.addEventListener('click',()=>window.open(b.dataset.url,'_blank','noopener')));
+document.querySelectorAll('.example').forEach(b=>b.addEventListener('click',()=>runCommand(b.textContent)));
+$('#clear').addEventListener('click',()=>{chat.replaceChildren();add('Chat cleared. Hello! What can I help you with?')});
+$('#askAi').addEventListener('click',()=>{const q=$('#prompt').value.trim();const url=q?'https://chatgpt.com/?q='+encodeURIComponent(q):'https://chatgpt.com';window.open(url,'_blank','noopener')});
+let recognition=null;
+const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(!SpeechRecognition){$('#micBtn').disabled=true;$('#voiceNote').textContent='આ browserમાં voice recognition ઉપલબ્ધ નથી. Android પર Chrome અજમાવો અથવા text box વાપરો. Speech output અલગથી ઉપલબ્ધ હોઈ શકે છે.'}
+$('#micBtn').addEventListener('click',()=>{
+ if(!SpeechRecognition)return;
+ try{recognition=new SpeechRecognition();recognition.lang=$('#lang').value;recognition.interimResults=false;recognition.maxAlternatives=1;
+ recognition.onstart=()=>status.textContent='● LISTENING';recognition.onerror=e=>{status.textContent='● SYSTEM READY';reply('Voice error: '+e.error+'. Microphone permission અને internet/browser support તપાસો.');};
+ recognition.onend=()=>status.textContent='● SYSTEM READY';recognition.onresult=e=>runCommand(e.results[0][0].transcript);recognition.start();
+ }catch(e){status.textContent='● SYSTEM READY';reply('Microphone શરૂ ન થઈ શક્યો. Browser permission તપાસો.')}
+});
+$('#stopBtn').addEventListener('click',()=>{if(recognition)recognition.stop();if('speechSynthesis'in window)window.speechSynthesis.cancel();status.textContent='● SYSTEM READY'});
+</script>
+</body>
+</html>
